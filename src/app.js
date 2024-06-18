@@ -1,9 +1,14 @@
 const express = require("express");
 const cookieParser = require("cookie-parser");
 require("dotenv").config();
+const cors = require("cors");
+const clienterror = require("./clienterror.js");
 const PORT = process.env.PORT || 3000;
 
 const app = express();
+
+let isModelInitialize = false;
+let modelTensor;
 
 app.use(express.json());
 app.use(cookieParser());
@@ -18,3 +23,32 @@ app.listen(PORT, () => {
 
 const router = require("./routes/index");
 app.use(router);
+
+// untuk mendapatkan hasil dari scan
+app.get("/api/hasil", async (req, res) => {
+  model.getscan().then((data) => {
+    res.json({
+      status: "success",
+      data,
+    });
+  });
+});
+
+// untuk melakukan scan
+app.post("/api/scan", async (req, res) => {
+  try {
+    let analyze = await model.analyzeclassification(
+      modelTensor,
+      req.files.image.data
+    );
+    res.status(201).json({
+      status: "Sukses",
+      data: analyze,
+    });
+  } catch (error) {
+    res.status(error.statusCode).json({
+      status: "Gagal",
+      message: error.message,
+    });
+  }
+});
