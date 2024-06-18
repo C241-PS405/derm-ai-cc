@@ -1,0 +1,1 @@
+{"version":"1.0.0","name":"dermaiapi","dependencies":{"@google-cloud/firestore":{"version":"7.8.0"},"@google-cloud/storage":{"version":"7.11.2"},"cors":{"version":"2.8.5"},"express":{"version":"4.19.2"},"mysql":{"version":"2.18.1"},"tfjs":{"version":"0.6.0"}}}
