@@ -2,7 +2,7 @@ const express = require("express");
 const cookieParser = require("cookie-parser");
 require("dotenv").config();
 const cors = require("cors");
-const clienterror = require("./clienterror.js");
+const model = require("./model.js");
 const PORT = process.env.PORT;
 
 const app = express();
@@ -12,6 +12,8 @@ let modelTensor;
 
 app.use(express.json());
 app.use(cookieParser());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static("public"));
 
 app.get("/", (req, res) => {
   res.send("Hello World");
