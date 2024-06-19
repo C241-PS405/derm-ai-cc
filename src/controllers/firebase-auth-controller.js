@@ -9,34 +9,41 @@ const {
 
 const auth = getAuth();
 
-// file: src/controllers/firebase-auth-controller.js
-
 class FirebaseAuthController {
   registerUser(req, res) {
-    const { email, password } = req.body;
-    if (!email || !password) {
+    const { email, password, name } = req.body;
+    if (!email || !password || !name) {
       return res.status(422).json({
-        email: "Email is required",
-        password: "Password is required",
+        error: true,
+        message: "Email, password, and name are required",
       });
     }
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        sendEmailVerification(auth.currentUser)
+        const user = userCredential.user;
+        sendEmailVerification(user)
           .then(() => {
             res.status(201).json({
-              message: "Verification email sent! User created successfully!",
+              error: false,
+              message: "User Created",
             });
           })
           .catch((error) => {
             console.error(error);
-            res.status(500).json({ error: "Error sending email verification" });
+            res.status(500).json({
+              error: true,
+              message: "Error sending email verification",
+            });
           });
       })
       .catch((error) => {
+        console.error(error);
         const errorMessage =
           error.message || "An error occurred while registering user";
-        res.status(500).json({ error: errorMessage });
+        res.status(500).json({
+          error: true,
+          message: errorMessage,
+        });
       });
   }
 
@@ -44,41 +51,58 @@ class FirebaseAuthController {
     const { email, password } = req.body;
     if (!email || !password) {
       return res.status(422).json({
-        email: "Email is required",
-        password: "Password is required",
+        error: true,
+        message: "Email and password are required",
       });
     }
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const idToken = userCredential._tokenResponse.idToken;
+        const userId = userCredential.user.uid;
+        const name = userCredential.user.displayName || "DermAI User"; // assuming displayName is set, otherwise default to "Unknown User"
+
         if (idToken) {
-          res.cookie("access_token", idToken, {
-            httpOnly: true,
+          res.status(200).json({
+            error: false,
+            message: "success",
+            loginResult: {
+              userId: userId,
+              name: name,
+              token: idToken,
+            },
           });
-          res
-            .status(200)
-            .json({ message: "User logged in successfully", userCredential });
         } else {
-          res.status(500).json({ error: "Internal Server Error" });
+          res.status(500).json({
+            error: true,
+            message: "Internal Server Error",
+          });
         }
       })
       .catch((error) => {
         console.error(error);
         const errorMessage =
           error.message || "An error occurred while logging in";
-        res.status(500).json({ error: errorMessage });
+        res.status(500).json({
+          error: true,
+          message: errorMessage,
+        });
       });
   }
 
   logoutUser(req, res) {
     signOut(auth)
       .then(() => {
-        res.clearCookie("access_token");
-        res.status(200).json({ message: "User logged out successfully" });
+        res.status(200).json({
+          error: false,
+          message: "User logged out successfully",
+        });
       })
       .catch((error) => {
         console.error(error);
-        res.status(500).json({ error: "Internal Server Error" });
+        res.status(500).json({
+          error: true,
+          message: "Internal Server Error",
+        });
       });
   }
 
@@ -86,19 +110,25 @@ class FirebaseAuthController {
     const { email } = req.body;
     if (!email) {
       return res.status(422).json({
-        email: "Email is required",
+        error: true,
+        message: "Email is required",
       });
     }
     sendPasswordResetEmail(auth, email)
       .then(() => {
-        res
-          .status(200)
-          .json({ message: "Password reset email sent successfully!" });
+        res.status(200).json({
+          error: false,
+          message: "Password reset email sent successfully!",
+        });
       })
       .catch((error) => {
         console.error(error);
-        res.status(500).json({ error: "Internal Server Error" });
+        res.status(500).json({
+          error: true,
+          message: "Internal Server Error",
+        });
       });
   }
 }
+
 module.exports = new FirebaseAuthController();
