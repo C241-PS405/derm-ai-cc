@@ -10,8 +10,9 @@ DermAI-API is a RESTful API to provides various functions to manage and process 
 The API consists of four main endpoints that provide different functions: <br>
 
 1. Authentication/Authorization API <br>
-2. Scan API <br><br>
-Overall, DermAI-API provides a comprehensive and efficient solution for managing and processing data related to skincare recommendations.<br>
+2. Scan API <br>
+
+<br>Overall, DermAI-API provides a comprehensive and efficient solution for managing and processing data related to skincare recommendations.<br>
 # How To Use
 Clone this repository <br>
 git clone <br>
