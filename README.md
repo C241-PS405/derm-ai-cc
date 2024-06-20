@@ -14,9 +14,9 @@ The API consists of four main endpoints that provide different functions: <br>
 Overall, DermAI-API provides a comprehensive and efficient solution for managing and processing data related to skincare recommendations.<br>
 # How To Use
 Clone this repository <br>
-[git clone] 
+git clone <br>
 Install all dependecies in package.json use npm i <br>
-[npm install] 
+npm install <br>
 Run in local with command <br>
 npm start
 
