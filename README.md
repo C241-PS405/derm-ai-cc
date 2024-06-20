@@ -14,10 +14,18 @@ The API consists of four main endpoints that provide different functions: <br>
 
 <br>Overall, DermAI-API provides a comprehensive and efficient solution for managing and processing data related to skincare recommendations.<br>
 # How To Use
-Clone this repository <br>
-git clone <br>
-Install all dependecies in package.json use npm i <br>
-npm install <br>
-Run in local with command <br>
-npm start
 
+To clone and run this application, you'll need Git and Node.js (which comes with npm) installed on your computer. From your command line:
+
+# Clone this repository
+$ git clone https://github.com/amitmerchant1990/electron-markdownify
+
+# Go into the repository
+$ cd electron-markdownify
+
+# Install dependencies
+$ npm install
+
+# Run the app
+$ npm start
+Note If you're using Linux Bash for Windows, see this guide or use node from the command prompt.
