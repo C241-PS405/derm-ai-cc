@@ -17,15 +17,18 @@ The API consists of four main endpoints that provide different functions: <br>
 
 To clone and run this application, you'll need Git and Node.js (which comes with npm) installed on your computer. From your command line:
 
+
+```bash
 # Clone this repository
-$ git clone https://github.com/amitmerchant1990/electron-markdownify
+$ git clone https://github.com/C241-PS405/derm-ai-cc.git
 
 # Go into the repository
-$ cd electron-markdownify
+$ cd derm-ai-cc
 
 # Install dependencies
 $ npm install
 
 # Run the app
 $ npm start
-Note If you're using Linux Bash for Windows, see this guide or use node from the command prompt.
+```
+
